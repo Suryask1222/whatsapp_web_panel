@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Admin Panel</title>
+  <meta name="description" content="Modern WhatsApp Admin Panel for managing messages and contacts" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-theme');
+    }
+  </script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ SIDEBAR ═══════════════════════════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z" fill="currentColor"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.118 1.522 5.851L.036 23.5l5.78-1.516A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.663-.516-5.18-1.415l-.37-.22-3.43.9.913-3.33-.24-.38A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fill="currentColor"/>
+      </svg>
+    </div>
+    <span class="brand-name">WA Panel</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a href="#" class="nav-item active" id="nav-dashboard" data-page="dashboard">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      <span>Dashboard</span>
+    </a>
+    <a href="#" class="nav-item" id="nav-messages" data-page="messages">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+      <span>Messages</span>
+    </a>
+    <a href="#" class="nav-item" id="nav-settings" data-page="settings">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+      </svg>
+      <span>Settings</span>
+    </a>
+    <a href="#" class="nav-item" id="btnSidebarLogout" style="margin-top: auto; color: var(--red);">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      <span>Logout</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="status-badge" id="statusBadge">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">Not Connected</span>
+    </div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════ MAIN ═══════════════════════════════════ -->
+<div class="main-wrapper">
+
+  <!-- ── Top bar ── -->
+  <header class="topbar">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <h1 class="topbar-title" id="pageTitle">Dashboard</h1>
+    <div class="topbar-right">
+      <div class="topbar-status">
+        <span class="status-dot small" id="topStatusDot"></span>
+        <span id="topStatusText">Not Connected</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Pages ── -->
+  <main class="content">
+
+    <!-- ████████ DASHBOARD PAGE ████████ -->
+    <div class="page active" id="page-dashboard">
+
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="statSent">0</span>
+            <span class="stat-label">Messages Sent</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="statContacts">0</span>
+            <span class="stat-label">Contacts</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="stat-info">
+            <span class="stat-value" id="statSession">0m</span>
+            <span class="stat-label">Session Time</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR Login card -->
+      <div class="card" id="qrCard">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="7" y="7" width="3" height="3"/><rect x="14" y="7" width="3" height="3"/><rect x="7" y="14" width="3" height="3"/><rect x="16" y="16" width="5" height="5"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">WhatsApp Login</h2>
+              <p class="card-subtitle">Link your WhatsApp account</p>
+            </div>
+          </div>
+          <span class="badge" id="connectionBadge">Offline</span>
+        </div>
+
+        <div class="card-body">
+
+          <!-- Login method tabs -->
+          <div class="login-tabs" id="loginTabs">
+            <button class="login-tab active" id="tabQR" data-tab="qr">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="7" y="7" width="3" height="3"/><rect x="14" y="7" width="3" height="3"/><rect x="7" y="14" width="3" height="3"/><rect x="16" y="16" width="5" height="5"/></svg>
+              QR Code
+            </button>
+            <button class="login-tab" id="tabPhone" data-tab="phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+              Phone Number
+            </button>
+          </div>
+
+          <!-- ── QR Panel ── -->
+          <div class="login-panel" id="panelQR">
+            <div class="qr-section" id="qrSection">
+              <div class="qr-placeholder" id="qrPlaceholder">
+                <div class="qr-dots-anim">
+                  <div class="qr-corner tl"></div>
+                  <div class="qr-corner tr"></div>
+                  <div class="qr-corner bl"></div>
+                  <div class="qr-corner br"></div>
+                  <div class="qr-center-text">Press Connect<br/>to generate QR</div>
+                </div>
+              </div>
+              <img id="qrImage" class="qr-image hidden" alt="WhatsApp QR Code" />
+            </div>
+            <div class="qr-info">
+              <p class="qr-steps">
+                <span>1. Open WhatsApp on your phone</span>
+                <span>2. Tap ⋮ Menu &gt; Linked Devices</span>
+                <span>3. Tap "Link a Device"</span>
+                <span>4. Scan this QR code</span>
+              </p>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" id="btnConnect">
+                <span class="btn-text">Connect via QR</span>
+                <div class="btn-loader hidden"></div>
+              </button>
+              <button class="btn btn-danger hidden" id="btnDisconnect">Disconnect</button>
+            </div>
+          </div>
+
+          <!-- ── Phone Number Panel ── -->
+          <div class="login-panel hidden" id="panelPhone">
+
+            <!-- Input form -->
+            <div id="phoneLoginForm">
+              <div class="form-group">
+                <label class="form-label" for="pairingPhoneInput">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  Your WhatsApp Number
+                </label>
+                <input type="tel" id="pairingPhoneInput" class="form-input"
+                  placeholder="e.g. 919876543210 (country code + number)" />
+                <span class="form-hint">Include country code without + &nbsp;·&nbsp; e.g. <strong>91</strong>XXXXXXXXXX for India</span>
+              </div>
+
+              <div class="pairing-info-box">
+                <div class="pairing-info-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1 .3 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                    <line x1="9" y1="18" x2="15" y2="18"/>
+                    <line x1="10" y1="22" x2="14" y2="22"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="pairing-info-title">How it works</p>
+                  <p class="pairing-info-desc">You'll get an 8-character code. Open WhatsApp → ⋮ → Linked Devices → Link with phone number → type the code. No QR scan needed.</p>
+                </div>
+              </div>
+
+              <div class="btn-row">
+                <button class="btn btn-primary" id="btnConnectPhone">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                  <span class="btn-text">Get Pairing Code</span>
+                  <div class="btn-loader hidden"></div>
+                </button>
+                <button class="btn btn-danger hidden" id="btnDisconnectPhone">Disconnect</button>
+              </div>
+            </div>
+
+            <!-- Pairing code display -->
+            <div class="pairing-code-card hidden" id="pairingCodeDisplay">
+              <p class="pairing-code-label">Enter this code in WhatsApp</p>
+              <div class="pairing-code-digits" id="pairingCodeDigits">---- ----</div>
+              <button class="btn btn-outline pairing-copy-btn" id="btnCopyCode">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                Copy Code
+              </button>
+              <p class="pairing-code-steps">
+                WhatsApp → ⋮ → Linked Devices → Link with phone number → type the code above
+              </p>
+              <div class="pairing-countdown">
+                <div class="pairing-countdown-bar" id="pairingBar"></div>
+              </div>
+              <p class="pairing-expire-note" id="pairingExpireNote">Code expires in <span id="pairingTimer">60</span>s</p>
+            </div>
+
+          </div><!-- /panelPhone -->
+
+        </div>
+      </div>
+
+      <!-- Activity log -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">Activity Log</h2>
+              <p class="card-subtitle">Recent events</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="activity-list" id="activityList">
+            <li class="activity-empty">No activity yet</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /dashboard page -->
+
+    <!-- ████████ MESSAGES PAGE ████████ -->
+    <div class="page" id="page-messages">
+
+      <!-- Send message card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">Send Message</h2>
+              <p class="card-subtitle">Compose and send a WhatsApp message</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label class="form-label" for="phoneInput">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+              Recipient Phone Number
+            </label>
+            <input type="tel" id="phoneInput" class="form-input" placeholder="e.g. 919876543210 (with country code)" />
+            <span class="form-hint">Include country code without + (e.g. 91 for India)</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="messageInput">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Message
+            </label>
+            <textarea id="messageInput" class="form-textarea" placeholder="Type your message here..."></textarea>
+            <div class="char-counter"><span id="charCount">0</span> / 4096</div>
+          </div>
+
+          <!-- Template buttons -->
+          <div class="template-section">
+            <p class="template-label">Quick Templates</p>
+            <div class="template-grid">
+              <button class="template-btn" id="tpl-progress" data-tpl="Hi! Just wanted to share a quick progress update on your project. Everything is on track and we are making great progress. Please reach out if you have any questions!">
+                <span class="tpl-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </span>
+                Progress Update
+              </button>
+              <button class="template-btn" id="tpl-internship" data-tpl="Congratulations! We are pleased to offer you an internship opportunity with our team. Please reply to confirm your acceptance and we will send you the details shortly.">
+                <span class="tpl-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>
+                </span>
+                Internship Offer
+              </button>
+              <button class="template-btn" id="tpl-payment" data-tpl="Hi, this is a friendly reminder that your payment is due. Kindly complete the payment at your earliest convenience to avoid any disruption. Thank you!">
+                <span class="tpl-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                </span>
+                Payment Reminder
+              </button>
+              <button class="template-btn" id="tpl-followup" data-tpl="Hi! Just following up on our previous conversation. Wanted to check if you had any questions or needed any further assistance. Looking forward to hearing from you!">
+                <span class="tpl-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                </span>
+                Follow-up Message
+              </button>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-send" id="btnSend">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <span class="btn-text">Send Message</span>
+            <div class="btn-loader hidden"></div>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Message history placeholder -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">Sent Messages</h2>
+              <p class="card-subtitle">History of sent messages this session</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="message-list" id="messageList">
+            <li class="activity-empty">No messages sent yet</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- /messages page -->
+
+    <!-- ████████ SETTINGS PAGE ████████ -->
+    <div class="page" id="page-settings">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-icon purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            </div>
+            <div>
+              <h2 class="card-title">Settings</h2>
+              <p class="card-subtitle">Configure your panel</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="settings-section">
+            <h3 class="settings-section-title">Connection</h3>
+            <div class="settings-item">
+              <div>
+                <p class="settings-item-name">WhatsApp Status</p>
+                <p class="settings-item-desc">Current connection state of your WhatsApp account</p>
+              </div>
+              <span class="badge" id="settingsConnectionBadge">Offline</span>
+            </div>
+            <div class="settings-item">
+              <div>
+                <p class="settings-item-name">Server URL</p>
+                <p class="settings-item-desc">Backend API endpoint</p>
+              </div>
+              <code class="settings-code" id="serverUrl">-</code>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="settings-section-title">Notifications</h3>
+            <div class="settings-item">
+              <div>
+                <p class="settings-item-name">Toast Notifications</p>
+                <p class="settings-item-desc">Show alerts for send events</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="toastToggle" checked />
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+            <div class="settings-item">
+              <div>
+                <p class="settings-item-name">Sound Alerts</p>
+                <p class="settings-item-desc">Play sound on message sent</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="soundToggle" />
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="settings-section-title">Appearance</h3>
+            <div class="settings-item">
+              <div>
+                <p class="settings-item-name">Light Mode</p>
+                <p class="settings-item-desc">Toggle between light and dark themes</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="themeToggle" />
+                <span class="toggle-track"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="settings-section-title">Session</h3>
+            <div class="btn-row">
+              <button class="btn btn-outline" id="settingsClearLog">Clear Activity Log</button>
+              <button class="btn btn-danger" id="settingsDisconnect">Disconnect WhatsApp</button>
+              <button class="btn btn-outline" id="settingsLogout" style="border-color: var(--red); color: var(--red);">Logout Panel</button>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h3 class="settings-section-title">About</h3>
+            <div class="about-block">
+              <div class="about-logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z" fill="currentColor"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.118 1.522 5.851L.036 23.5l5.78-1.516A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.663-.516-5.18-1.415l-.37-.22-3.43.9.913-3.33-.24-.38A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fill="currentColor"/></svg>
+              </div>
+              <div>
+                <p class="about-name">WA Admin Panel</p>
+                <p class="about-version">v1.0.0 · Node.js + whatsapp-web.js</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div><!-- /settings page -->
+
+  </main>
+</div>
+
+<!-- ═══════════════════════════════ OVERLAY (mobile) ═══════════════════════ -->
+<div class="sidebar-overlay hidden" id="sidebarOverlay"></div>
+
+<!-- ═══════════════════════════════ TOAST CONTAINER ═══════════════════════ -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Socket.IO & App JS -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

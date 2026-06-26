@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - WhatsApp Admin Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-theme');
+    }
+  </script>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: auto;
+      padding: 20px;
+    }
+    .login-wrapper {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: loginFadeIn 0.5s ease;
+    }
+    @keyframes loginFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .login-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
+    }
+    .login-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: var(--green-dim);
+      border: 1px solid var(--border-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      box-shadow: var(--green-glow);
+    }
+    .login-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .login-subtitle {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .error-box {
+      background: var(--red-dim);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: var(--red);
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+    .error-box.show {
+      display: flex;
+      animation: shake 0.3s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .password-toggle:hover {
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+  <div class="login-header">
+    <div class="login-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+        <path d="M17.498 14.382c-.301-.15-1.767-.867-2.04-.966-.273-.101-.473-.15-.673.15-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.174-.3-.019-.465.13-.615.136-.135.301-.345.451-.523.146-.181.194-.301.297-.496.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.172-.015-.371-.015-.571-.015-.2 0-.523.074-.797.359-.273.3-1.045 1.02-1.045 2.475s1.07 2.865 1.219 3.075c.149.195 2.105 3.195 5.1 4.485.714.3 1.27.48 1.704.629.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z" fill="currentColor"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.118 1.522 5.851L.036 23.5l5.78-1.516A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.663-.516-5.18-1.415l-.37-.22-3.43.9.913-3.33-.24-.38A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fill="currentColor"/>
+      </svg>
+    </div>
+    <h1 class="login-title">WhatsApp Admin Panel</h1>
+    <p class="login-subtitle">Enter password to access the panel</p>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="error-box" id="errorBox">
+        <span>⚠️</span>
+        <span id="errorMessage">Invalid password</span>
+      </div>
+
+      <form id="loginForm" class="login-panel">
+        <div class="form-group">
+          <label class="form-label" for="passwordInput">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required autofocus />
+            <span class="password-toggle" id="passwordToggle">Show</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-send" id="btnLogin">
+          <span class="btn-text">Log In</span>
+          <div class="btn-loader hidden"></div>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('loginForm');
+  const passwordInput = document.getElementById('passwordInput');
+  const passwordToggle = document.getElementById('passwordToggle');
+  const errorBox = document.getElementById('errorBox');
+  const errorMessage = document.getElementById('errorMessage');
+  const btnLogin = document.getElementById('btnLogin');
+  const btnLoader = btnLogin.querySelector('.btn-loader');
+  const btnText = btnLogin.querySelector('.btn-text');
+
+  // Toggle password visibility
+  passwordToggle.addEventListener('click', () => {
+    const isPassword = passwordInput.type === 'password';
+    passwordInput.type = isPassword ? 'text' : 'password';
+    passwordToggle.textContent = isPassword ? 'Hide' : 'Show';
+  });
+
+  // Handle Login Form Submission
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Reset state
+    errorBox.classList.remove('show');
+    btnLoader.classList.remove('hidden');
+    btnLoader.classList.add('light');
+    btnText.style.opacity = '0.5';
+    btnLogin.disabled = true;
+
+    const password = passwordInput.value;
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        window.location.href = '/index.html';
+      } else {
+        showError(data.message || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      showError('Could not reach the server. Please verify it is running.');
+    } finally {
+      btnLoader.classList.add('hidden');
+      btnText.style.opacity = '';
+      btnLogin.disabled = false;
+    }
+  });
+
+  function showError(msg) {
+    errorMessage.textContent = msg;
+    errorBox.classList.add('show');
+    passwordInput.focus();
+    // Shake animation reset
+    errorBox.style.animation = 'none';
+    setTimeout(() => { errorBox.style.animation = ''; }, 10);
+  }
+</script>
+</body>
+</html>
